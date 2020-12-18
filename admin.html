@@ -1,0 +1,178 @@
+<html>
+
+<head>
+    <!-- Muhammad Mukhtar -->
+    <!-- TI 2D -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Cashier</title>
+    <script type="text/javascript">
+        function cek() {
+            radioValidation();
+            if (form.porsi.value == "" || form.harga.value == "") {
+                alert("data kosong");
+                exit;
+            }
+        }
+        function hitung() {
+            cek(); //panggil function cek
+            if (form.stat.value == "member") {
+                var a = form.jenis.value;
+                var b = form.jenis.value;
+                var c = a * b;
+                var diskon = c * 5 / 100;
+                form.total.value = c - diskon;
+            }
+            else {
+                var a = form.jenis.value;
+                var b = form.jenis.value;
+                var c = a * b;
+                form.total.value = c;
+            }
+        }
+        function radioValidation() {
+
+            var stat = document.getElementsByName('stat');
+            var statValue = false;
+
+            for (var i = 0; i < stat.length; i++) {
+                if (stat[i].checked == true) {
+                    statValue = true;
+                }
+            }
+            if (!statValue) {
+                alert("Please Choose the Status");
+                return false;
+            }
+
+        }
+
+        function harga() {
+            var jenis = form.jenis.value;
+            var harga_satuan = 0;
+            switch (jenis) {
+                case 'nasgor':
+                    harga_satuan = 15000;
+                    break;
+
+                case 'sate':
+                    harga_satuan = 20000;
+                    break;
+
+                case 'soto':
+                    harga_satuan = 12000;
+                    break;
+            }
+            form.harga_satu.value = harga_satuan;
+        }
+
+        function receipt() {
+            cek();
+            var b = form.porsi.value;
+            var jenis = form.jenis.value;
+            var harga_satuan = 0;
+            var jumlah = form.jumlah.value;
+            var total_harga = 0;
+
+            switch (jenis) {
+                case 'nasgor':
+                    harga_satuan = 15000;
+                    break;
+
+                case 'sate':
+                    harga_satuan = 20000;
+                    break;
+
+                case 'soto':
+                    harga_satuan = 12000;
+                    break;
+            }
+
+            if (form.stat.value == "member") {
+                var c = jenis * b;
+                var diskon = c * 5 / 100;
+                form.total.value = c - diskon;
+            }
+            else {
+                var c = jenis * b;
+                form.total.value = c;
+            }
+        }
+
+    </script>
+</head>
+
+<body style="background-color: #a35d6a;">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #d49a89;"">
+        <img src=" img/Logo-Navbar.png" style="width: 95px;">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="index.html">Home</a>
+                <a class="nav-item nav-link" href="biodata.html">Biodata</a>
+                <a class="nav-item nav-link" href="profil.html">Profile</a>
+                <a class="nav-item nav-link active" href="admin.html">Cashier <span class="sr-only">(current)</span></a>
+            </div>
+        </div>
+    </nav>
+
+    <br><br><br>
+
+    <div class="container-fluid text-white col-6">
+        <form action="post" name="form">
+            <div class="form-group">
+                <label for="id_pembeli">ID Pembeli</label>
+                <input type="text" class="form-control" id="id_pembeli" name="stat"
+                    placeholder="Kombinasi Angka dan Huruf">
+            </div>
+            <div class="form-group">
+                <label for="nama_pembeli">Nama Pembeli</label>
+                <input type="text" class="form-control" id="nama_pembeli" name="stat" placeholder="String">
+            </div>
+            <div class="form-group">
+                <label for="status">Status Pembeli</label>
+                <br>
+                <input type="radio" name="stat" id="member" value="member" />
+                <label for="member" style="color: #d2e603;">Member</label>
+                <br>
+                <input type="radio" name="stat" id="nomember" value="bukan" />
+                <label for="nomember" style="color: #d2e603;">Bukan Member</label>
+            </div>
+            <div class="form-group">
+                <label for="">Menu</label>
+                <br>
+                <select name="jenis" id="jenis" onchange="harga()">
+                    <option value="nasgor">Nasi Goreng Kampung</option>
+                    <option value="sate">Sate Ayam</option>
+                    <option value="soto">Soto Ayam</option>
+                </select>
+                <!-- <input type="number" name="harga_satu" value="" placeholder="Rp. " readonly> -->
+            </div>
+            <div class="form-group">
+                <label for="harga_satu">Harga Menu</label>
+                <input type="number" class="form-control" id="harga_satu" name="harga_satu" placeholder="Harga per Item"
+                    readonly />
+            </div>
+            <div class="form-group">
+                <label for="porsi">Banyak Porsi</label>
+                <input type=number name="porsi" class="form-control" id="porsi" placeholder="Item per menu">
+            </div>
+            <div class="form-group">
+                <label for="total">Harga Total</label>
+                <input type="number" class="form-control" id="total" name="total" placeholder="RP. " value="" readonly>
+            </div>
+            <button type=button name=submit onclick="hitung()" value="Hasil" class="btn btn-primary">Submit</button>
+            <button type=button name=submit onclick="reset()" value="Reset" class="btn btn-danger">Reset</button>
+        </form>
+    </div>
+
+</body>
+
+</html>
